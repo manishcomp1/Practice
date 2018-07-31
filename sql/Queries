@@ -1,0 +1,81 @@
+#order_by
+
+SELECT * FROM Customers
+ORDER BY Country DESC;
+----------------------------
+The COUNT() function returns the number of rows that matches a specified criteria.
+
+The AVG() function returns the average value of a numeric column.
+
+The SUM() function returns the total sum of a numeric column.
+
+SELECT AVG(Price)
+FROM Products; 
+
+----------------------------------------------------------
+
+The GROUP BY statement is often used with aggregate functions (COUNT, MAX, MIN, SUM, AVG) to group the result-set by one or more columns.
+SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+ORDER BY COUNT(CustomerID) DESC;
+
+----------------------------------------------------------
+The HAVING clause was added to SQL because the WHERE keyword could not be used with aggregate functions.
+SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+HAVING COUNT(CustomerID) > 5;
+
+-----------------------------------------------------------
+UNION merges the contents of two structurally-compatible tables into a single combined table. The difference between UNION and UNION ALL is that UNION will omit duplicate records whereas UNION ALL will include duplicate records.
+
+It is important to note that the performance of UNION ALL will typically be better than UNION, since UNION requires the server to do the additional work of removing any duplicates. So, in cases where is is certain that there will not be any duplicates, or where having duplicates is not a problem, use of UNION ALL would be recommended for performance reasons.
+
+------------------------------------------------------------
+
+DDL is Data Definition Language : it is used to define data structures.
+
+For example, with SQL, it would be instructions such as create table, alter table, 
+
+------------------------------------------------------------
+SELECT Name
+FROM   Employees
+WHERE  Salary = (SELECT MIN(Salary)
+                 FROM   (SELECT DISTINCT TOP (2) Salary
+                         FROM   Employees
+                         ORDER  BY Salary DESC) T);
+--------------------------------------------------------------
+
+DML is Data Manipulation Language : it is used to manipulate data itself.
+
+For example, with SQL, it would be instructions such as insert, update, delete, ...
+
+
+--------------------------------------------------------
+
+    Delete command is a DML command, it is used to delete rows from a table. It can be rolled back.
+    Truncate is a DDL command, it is used to delete all the rows from the table and free the space containing the table. It cant be rolled back.
+    Drop is a DDL command, it removes the complete data along with the table structure(unlike truncate command that removes only the rows). All the tables’ rows, indexes, and privileges will also be removed.
+-----------------------------------------------------------------
+Where clause is used to fetch data from a database that specifies particular criteria whereas a Having clause is used along with ‘GROUP BY’ to fetch data that meets particular criteria specified by the Aggregate functions. Where clause cannot be used with Aggregate functions, but the Having clause can.
+---------------------------------------------------------------------
+
+Definition - What does Atomicity Consistency Isolation Durability (ACID) mean?
+Atomicity Consistency Isolation Durability (ACID) is a concept referring to a database system’s four transaction properties: atomicity, consistency, isolation and durability.
+Techopedia explains Atomicity Consistency Isolation Durability (ACID)
+
+A database guarantees the following four properties to ensure database reliability, as follows:
+
+Atomicity: A database follows the all or nothing rule, i.e., the database considers all transaction operations as one whole unit or atom. Thus, when a database processes a transaction, it is either fully completed or not executed at all.
+
+Consistency: Ensures that only valid data following all rules and constraints is written in the database. When a transaction results in invalid data, the database reverts to its previous state, which abides by all customary rules and constraints.
+
+Isolation: Ensures that transactions are securely and independently processed at the same time without interference, but it does not ensure the order of transactions. For example, user A withdraws $100 and user B withdraws $250 from user Z’s account, which has a balance of $1000. Since both A and B draw from Z’s account, one of the users is required to wait until the other user transaction is completed, avoiding inconsistent data. If B is required to wait, then B must wait until A’s transaction is completed, and Z’s account balance changes to $900. Now, B can withdraw $250 from this $900 balance.
+
+Durability: In the above example, user B may withdraw $100 only after user A’s transaction is completed and is updated in the database. If the system fails before A’s transaction is logged in the database, A cannot withdraw any money, and Z’s account returns to its previous consistent state.
+
+---------------------------------------------------------------------
+
+https://sqlzoo.net/ -- online test
+
